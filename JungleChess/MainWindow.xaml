@@ -1,0 +1,68 @@
+﻿<Window x:Class="JungleChess.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:JungleChess"
+        mc:Ignorable="d"
+        d:DesignWidth="640" d:DesignHeight="480"
+        Title="JungleChess">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="25"/>
+        </Grid.RowDefinitions>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="200"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid Name="Chessboard">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+            </Grid>
+            <StackPanel Grid.Column="1" VerticalAlignment="Stretch">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Button Grid.Row="0" Content="New"/>
+                    <Button Grid.Row="1" Content="Surrender"/>
+                    <Button Grid.Row="2" Content="Draw"/>
+                </Grid>
+            </StackPanel>
+        </Grid>
+        <StatusBar Grid.Row="1" Background="#FFF0F0F0" FontSize="17.5">
+            <StatusBarItem Padding="5,0">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock FontStyle="Italic" Text="Player on turn: "/>
+                    <TextBlock Name="textBlockOnTurn" FontStyle="Italic"/>
+                    <TextBlock FontStyle="Italic" Text=" pieces."/>
+                </StackPanel>
+            </StatusBarItem>
+            <StatusBarItem Padding="5,0">
+            </StatusBarItem>
+            <StatusBarItem HorizontalAlignment="Right" Padding="5,0">
+                <TextBlock FontWeight="Bold" Text="© 2021, Rui Zhang"/>
+            </StatusBarItem>
+        </StatusBar>
+    </Grid>
+</Window>
