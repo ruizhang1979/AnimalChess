@@ -23,6 +23,7 @@ namespace JungleChess
         public MainWindow()
         {
             InitializeComponent();
+            DataContext = new ChessBoard();
         }
     }
 }

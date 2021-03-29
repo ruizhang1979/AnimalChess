@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Update="Application.Resources">
+    <None Update="Window.Resources">
       <Generator>MSBuild:Compile</Generator>
     </None>
   </ItemGroup>

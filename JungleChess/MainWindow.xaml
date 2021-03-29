@@ -6,7 +6,10 @@
         xmlns:local="clr-namespace:JungleChess"
         mc:Ignorable="d"
         d:DesignWidth="640" d:DesignHeight="480"
-        Title="JungleChess">
+        Title="JungleChess"  FontSize="16">
+    <Window.Resources>
+        <ResourceDictionary Source="ApplicationResources.xaml" />
+    </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="2*"/>
@@ -23,20 +26,26 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <Grid Name="Chessboard">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-            </Grid>
+            <ItemsControl Name="ChessBoard" >
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <Canvas Width="16" Height="16" Background="LightBlue"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Width="4" Height="4">
+                            <Image Width="2" Height="2" Source="{Binding Image}" />
+                        </Grid>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+                <ItemsControl.ItemContainerStyle>
+                    <Style>
+                        <Setter Property="Canvas.Left" Value="{Binding Pos.X}" />
+                        <Setter Property="Canvas.Top" Value="{Binding Pos.Y}" />
+                    </Style>
+                </ItemsControl.ItemContainerStyle>
+            </ItemsControl>
             <StackPanel Grid.Column="1" VerticalAlignment="Stretch">
                 <Grid>
                     <Grid.RowDefinitions>

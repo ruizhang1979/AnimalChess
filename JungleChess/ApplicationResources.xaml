@@ -1,0 +1,168 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:JungleChess">
+	<Style x:Key="ChessPieceStyle" TargetType="{x:Type Image}">
+		<Style.Triggers>
+			<MultiDataTrigger>
+				<MultiDataTrigger.Conditions>
+					<Condition Binding="{Binding Type}" Value="{x:Static local:PieceType.Mouse}"/>
+					<Condition Binding="{Binding Player}" Value="{x:Static local:Player.Red}"/>
+                    <Condition Binding="{Binding FaceUp}" Value="true"/>
+                </MultiDataTrigger.Conditions>
+                <MultiDataTrigger.Setters>
+                    <Setter Property="Image.Source" Value="http://www.wpclipart.com/recreation/games/chess/chess_set_1/chess_piece_white_pawn_T.png" />
+                </MultiDataTrigger.Setters>
+            </MultiDataTrigger>
+			<MultiDataTrigger>
+				<MultiDataTrigger.Conditions>
+					<Condition Binding="{Binding Type}" Value="{x:Static local:PieceType.Cat}"/>
+                    <Condition Binding="{Binding Player}" Value="{x:Static local:Player.Red}"/>
+                    <Condition Binding="{Binding FaceUp}" Value="true"/>
+                </MultiDataTrigger.Conditions>
+				<MultiDataTrigger.Setters>
+					<Setter Property="Image.Source" Value="http://www.wpclipart.com/recreation/games/chess/chess_set_1/chess_piece_white_rook_T.png" />
+				</MultiDataTrigger.Setters>
+			</MultiDataTrigger>
+			<MultiDataTrigger>
+				<MultiDataTrigger.Conditions>
+					<Condition Binding="{Binding Type}" Value="{x:Static local:PieceType.Dog}"/>
+                    <Condition Binding="{Binding Player}" Value="{x:Static local:Player.Red}"/>
+                    <Condition Binding="{Binding FaceUp}" Value="true"/>
+                </MultiDataTrigger.Conditions>
+				<MultiDataTrigger.Setters>
+					<Setter Property="Image.Source" Value="http://www.wpclipart.com/recreation/games/chess/chess_set_1/chess_piece_white_knight_T.png" />
+				</MultiDataTrigger.Setters>
+			</MultiDataTrigger>
+			<MultiDataTrigger>
+				<MultiDataTrigger.Conditions>
+					<Condition Binding="{Binding Type}" Value="{x:Static local:PieceType.Wolf}"/>
+                    <Condition Binding="{Binding Player}" Value="{x:Static local:Player.Red}"/>
+                    <Condition Binding="{Binding FaceUp}" Value="true"/>
+                </MultiDataTrigger.Conditions>
+				<MultiDataTrigger.Setters>
+					<Setter Property="Image.Source" Value="http://www.wpclipart.com/recreation/games/chess/chess_set_1/chess_piece_white_bishop_T.png" />
+				</MultiDataTrigger.Setters>
+			</MultiDataTrigger>
+			<MultiDataTrigger>
+				<MultiDataTrigger.Conditions>
+					<Condition Binding="{Binding Type}" Value="{x:Static local:PieceType.Leopard}"/>
+                    <Condition Binding="{Binding Player}" Value="{x:Static local:Player.Red}"/>
+                    <Condition Binding="{Binding FaceUp}" Value="true"/>
+                </MultiDataTrigger.Conditions>
+				<MultiDataTrigger.Setters>
+					<Setter Property="Image.Source" Value="http://www.wpclipart.com/recreation/games/chess/chess_set_1/chess_piece_white_queen_T.png" />
+				</MultiDataTrigger.Setters>
+			</MultiDataTrigger>
+			<MultiDataTrigger>
+				<MultiDataTrigger.Conditions>
+					<Condition Binding="{Binding Type}" Value="{x:Static local:PieceType.Tiger}"/>
+                    <Condition Binding="{Binding Player}" Value="{x:Static local:Player.Red}"/>
+                    <Condition Binding="{Binding FaceUp}" Value="true"/>
+                </MultiDataTrigger.Conditions>
+				<MultiDataTrigger.Setters>
+					<Setter Property="Image.Source" Value="http://www.wpclipart.com/recreation/games/chess/chess_set_1/chess_piece_white_king_T.png" />
+				</MultiDataTrigger.Setters>
+			</MultiDataTrigger>
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding Type}" Value="{x:Static local:PieceType.Lion}"/>
+                    <Condition Binding="{Binding Player}" Value="{x:Static local:Player.Red}"/>
+                    <Condition Binding="{Binding FaceUp}" Value="true"/>
+                </MultiDataTrigger.Conditions>
+                <MultiDataTrigger.Setters>
+                    <Setter Property="Image.Source" Value="http://www.wpclipart.com/recreation/games/chess/chess_set_1/chess_piece_white_king_T.png" />
+                </MultiDataTrigger.Setters>
+            </MultiDataTrigger>
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding Type}" Value="{x:Static local:PieceType.Elephant}"/>
+                    <Condition Binding="{Binding Player}" Value="{x:Static local:Player.Red}"/>
+                    <Condition Binding="{Binding FaceUp}" Value="true"/>
+                </MultiDataTrigger.Conditions>
+                <MultiDataTrigger.Setters>
+                    <Setter Property="Image.Source" Value="http://www.wpclipart.com/recreation/games/chess/chess_set_1/chess_piece_white_king_T.png" />
+                </MultiDataTrigger.Setters>
+            </MultiDataTrigger>
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding Type}" Value="{x:Static local:PieceType.Mouse}"/>
+                    <Condition Binding="{Binding Player}" Value="{x:Static local:Player.Black}"/>
+                    <Condition Binding="{Binding FaceUp}" Value="true"/>
+                </MultiDataTrigger.Conditions>
+                <MultiDataTrigger.Setters>
+                    <Setter Property="Image.Source" Value="http://www.wpclipart.com/recreation/games/chess/chess_set_1/chess_piece_white_pawn_T.png" />
+                </MultiDataTrigger.Setters>
+            </MultiDataTrigger>
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding Type}" Value="{x:Static local:PieceType.Cat}"/>
+                    <Condition Binding="{Binding Player}" Value="{x:Static local:Player.Black}"/>
+                    <Condition Binding="{Binding FaceUp}" Value="true"/>
+                </MultiDataTrigger.Conditions>
+                <MultiDataTrigger.Setters>
+                    <Setter Property="Image.Source" Value="http://www.wpclipart.com/recreation/games/chess/chess_set_1/chess_piece_white_rook_T.png" />
+                </MultiDataTrigger.Setters>
+            </MultiDataTrigger>
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding Type}" Value="{x:Static local:PieceType.Dog}"/>
+                    <Condition Binding="{Binding Player}" Value="{x:Static local:Player.Black}"/>
+                    <Condition Binding="{Binding FaceUp}" Value="true"/>
+                </MultiDataTrigger.Conditions>
+                <MultiDataTrigger.Setters>
+                    <Setter Property="Image.Source" Value="http://www.wpclipart.com/recreation/games/chess/chess_set_1/chess_piece_white_knight_T.png" />
+                </MultiDataTrigger.Setters>
+            </MultiDataTrigger>
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding Type}" Value="{x:Static local:PieceType.Wolf}"/>
+                    <Condition Binding="{Binding Player}" Value="{x:Static local:Player.Black}"/>
+                    <Condition Binding="{Binding FaceUp}" Value="true"/>
+                </MultiDataTrigger.Conditions>
+                <MultiDataTrigger.Setters>
+                    <Setter Property="Image.Source" Value="http://www.wpclipart.com/recreation/games/chess/chess_set_1/chess_piece_white_bishop_T.png" />
+                </MultiDataTrigger.Setters>
+            </MultiDataTrigger>
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding Type}" Value="{x:Static local:PieceType.Leopard}"/>
+                    <Condition Binding="{Binding Player}" Value="{x:Static local:Player.Black}"/>
+                    <Condition Binding="{Binding FaceUp}" Value="true"/>
+                </MultiDataTrigger.Conditions>
+                <MultiDataTrigger.Setters>
+                    <Setter Property="Image.Source" Value="http://www.wpclipart.com/recreation/games/chess/chess_set_1/chess_piece_white_queen_T.png" />
+                </MultiDataTrigger.Setters>
+            </MultiDataTrigger>
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding Type}" Value="{x:Static local:PieceType.Tiger}"/>
+                    <Condition Binding="{Binding Player}" Value="{x:Static local:Player.Black}"/>
+                    <Condition Binding="{Binding FaceUp}" Value="true"/>
+                </MultiDataTrigger.Conditions>
+                <MultiDataTrigger.Setters>
+                    <Setter Property="Image.Source" Value="http://www.wpclipart.com/recreation/games/chess/chess_set_1/chess_piece_white_king_T.png" />
+                </MultiDataTrigger.Setters>
+            </MultiDataTrigger>
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding Type}" Value="{x:Static local:PieceType.Lion}"/>
+                    <Condition Binding="{Binding Player}" Value="{x:Static local:Player.Black}"/>
+                    <Condition Binding="{Binding FaceUp}" Value="true"/>
+                </MultiDataTrigger.Conditions>
+                <MultiDataTrigger.Setters>
+                    <Setter Property="Image.Source" Value="http://www.wpclipart.com/recreation/games/chess/chess_set_1/chess_piece_white_king_T.png" />
+                </MultiDataTrigger.Setters>
+            </MultiDataTrigger>
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding Type}" Value="{x:Static local:PieceType.Elephant}"/>
+                    <Condition Binding="{Binding Player}" Value="{x:Static local:Player.Black}"/>
+                    <Condition Binding="{Binding FaceUp}" Value="true"/>
+                </MultiDataTrigger.Conditions>
+                <MultiDataTrigger.Setters>
+                    <Setter Property="Image.Source" Value="http://www.wpclipart.com/recreation/games/chess/chess_set_1/chess_piece_white_king_T.png" />
+                </MultiDataTrigger.Setters>
+            </MultiDataTrigger>
+        </Style.Triggers>
+	</Style>
+</ResourceDictionary>
