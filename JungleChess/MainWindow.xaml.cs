@@ -20,10 +20,17 @@ namespace JungleChess
     /// </summary>
     public partial class MainWindow : Window
     {
+        public ChessBoard chessBoard;
         public MainWindow()
         {
             InitializeComponent();
-            DataContext = new ChessBoard();
+            chessBoard = new ChessBoard((int)ChessBoard.Width, (int)ChessBoard.Height);
+            DataContext = chessBoard;
+        }
+
+        private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            chessBoard.ReSize((int)ChessBoard.Width, (int)ChessBoard.Height);
         }
     }
 }

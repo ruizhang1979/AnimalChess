@@ -1,7 +1,10 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Drawing;
 using System.Runtime.CompilerServices;
 using System.Windows.Controls;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace JungleChess
 {
@@ -43,6 +46,13 @@ namespace JungleChess
             }
         }
 
+        private bool _Selected;
+        public bool Selected 
+        {
+            get => _Selected;
+            set { _Selected = value; RaisePropertyChanged(); }
+        }
+
         private Point _Pos;
         public Point Pos
         {
@@ -64,10 +74,22 @@ namespace JungleChess
             set { _Player = value; RaisePropertyChanged(); }
         }
 
-        public Image Image 
+        private ImageSource _Image;
+        public ImageSource Image 
         {
-            get;
-            private set;
+            get => _Image;
+            private set { _Image = value; RaisePropertyChanged(); }
+        }
+
+        public ChessPiece()
+        {
+            FaceUp = true;
+            var fullFilePath = @"http://www.americanlayout.com/wp/wp-content/uploads/2012/08/C-To-Go-300x300.png";
+            var bitmap = new BitmapImage();
+            bitmap.BeginInit();
+            bitmap.UriSource = new Uri(fullFilePath, UriKind.Absolute);
+            bitmap.EndInit();
+            Image = bitmap;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
