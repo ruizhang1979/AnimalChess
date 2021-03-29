@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:JungleChess"
         mc:Ignorable="d"
-        d:DesignWidth="640" d:DesignHeight="480"
-        Title="JungleChess" SizeChanged="Window_SizeChanged">
+        Width="820" Height="700"
+        Title="JungleChess" Icon="/Res/Icon.ico">
     <Window.Resources>
         <ResourceDictionary Source="ApplicationResources.xaml" />
     </Window.Resources>
@@ -26,7 +26,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <ItemsControl Name="ChessBoard" ItemsSource="{Binding Pieces}">
+            <ItemsControl Name="ChessBoard" ItemsSource="{Binding Pieces}" Width="640" Height="640">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                         <Canvas/>
@@ -34,7 +34,10 @@
                 </ItemsControl.ItemsPanel>
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <Image Source="{Binding Image}" />
+                        <Grid Width="{Binding Width}" Height="{Binding Height}">
+                            <Image  Source="{Binding ImageSource}" />
+                            <Border BorderBrush="Black" BorderThickness="2"/>
+                        </Grid>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
                 <ItemsControl.ItemContainerStyle>

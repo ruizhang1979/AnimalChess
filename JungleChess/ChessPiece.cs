@@ -1,10 +1,7 @@
-﻿using System;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Drawing;
 using System.Runtime.CompilerServices;
-using System.Windows.Controls;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
 
 namespace JungleChess
 {
@@ -29,7 +26,7 @@ namespace JungleChess
     public class ChessPiece : INotifyPropertyChanged
     {
         private bool _FaceUp;
-        public bool FaceUp 
+        public bool FaceUp
         {
             get => _FaceUp;
             set
@@ -47,7 +44,7 @@ namespace JungleChess
         }
 
         private bool _Selected;
-        public bool Selected 
+        public bool Selected
         {
             get => _Selected;
             set { _Selected = value; RaisePropertyChanged(); }
@@ -63,7 +60,7 @@ namespace JungleChess
         private PieceType _Type;
         public PieceType Type
         {
-            get => _Type; 
+            get => _Type;
             set { _Type = value; RaisePropertyChanged(); }
         }
 
@@ -75,21 +72,37 @@ namespace JungleChess
         }
 
         private ImageSource _Image;
-        public ImageSource Image 
+        public ImageSource Image
         {
             get => _Image;
             private set { _Image = value; RaisePropertyChanged(); }
         }
 
+        private double _Width;
+        public double Width
+        {
+            get => _Width;
+            set { _Width = value; RaisePropertyChanged(); }
+        }
+
+
+        private double _Height;
+        public double Height
+        {
+            get => _Height;
+            set { _Height = value; RaisePropertyChanged(); }
+        }
+
+        private string _ImageSource;
+        public string ImageSource
+        {
+            get => _ImageSource;
+            set { _ImageSource = value; RaisePropertyChanged(); }
+        }
+
         public ChessPiece()
         {
             FaceUp = true;
-            var fullFilePath = @"http://www.americanlayout.com/wp/wp-content/uploads/2012/08/C-To-Go-300x300.png";
-            var bitmap = new BitmapImage();
-            bitmap.BeginInit();
-            bitmap.UriSource = new Uri(fullFilePath, UriKind.Absolute);
-            bitmap.EndInit();
-            Image = bitmap;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

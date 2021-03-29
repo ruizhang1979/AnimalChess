@@ -7,13 +7,51 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Res\cat_black.png" />
+    <None Remove="Res\cat_red.png" />
+    <None Remove="Res\dog_black.png" />
+    <None Remove="Res\dog_red.png" />
+    <None Remove="Res\elephant_black.png" />
+    <None Remove="Res\elephant_red.png" />
+    <None Remove="Res\icon.ico" />
+    <None Remove="Res\Leopard_black.png" />
+    <None Remove="Res\Leopard_red.png" />
+    <None Remove="Res\lion_black.png" />
+    <None Remove="Res\lion_red.png" />
+    <None Remove="Res\mouse_black.png" />
+    <None Remove="Res\mouse_red.png" />
+    <None Remove="Res\tiger_black.jpg" />
+    <None Remove="Res\tiger_black.png" />
+    <None Remove="Res\tiger_red.png" />
+    <None Remove="Res\wolf_black.jpg" />
+    <None Remove="Res\wolf_black.png" />
+    <None Remove="Res\wolf_red.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Update="Window.Resources">
       <Generator>MSBuild:Compile</Generator>
     </None>
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Res\" />
+    <Resource Include="Res\cat_black.png" />
+    <Resource Include="Res\cat_red.png" />
+    <Resource Include="Res\dog_black.png" />
+    <Resource Include="Res\dog_red.png" />
+    <Resource Include="Res\elephant_black.png" />
+    <Resource Include="Res\elephant_red.png" />
+    <Resource Include="Res\icon.ico" />
+    <Resource Include="Res\Leopard_black.png" />
+    <Resource Include="Res\Leopard_red.png" />
+    <Resource Include="Res\lion_black.png" />
+    <Resource Include="Res\lion_red.png" />
+    <Resource Include="Res\mouse_black.png" />
+    <Resource Include="Res\mouse_red.png" />
+    <Resource Include="Res\tiger_black.png" />
+    <Resource Include="Res\tiger_red.png" />
+    <Resource Include="Res\wolf_black.png" />
+    <Resource Include="Res\wolf_red.png" />
   </ItemGroup>
 
 </Project>
