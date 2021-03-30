@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 
 namespace JungleChess
 {
@@ -11,7 +12,7 @@ namespace JungleChess
         public MainWindow()
         {
             InitializeComponent();
-            chessBoard = new ChessBoard((int)ChessBoard.Width, (int)ChessBoard.Height);
+            chessBoard = new ChessBoard(Math.Min(ChessBoard.Width, ChessBoard.Height));
             DataContext = chessBoard;
         }
     }

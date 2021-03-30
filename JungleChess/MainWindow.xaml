@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:JungleChess"
         mc:Ignorable="d"
         Width="820" Height="700"
-        Title="JungleChess" Icon="/Res/Icon.ico">
+        Title="Jungle Chess" Icon="/Res/Icon.ico">
     <Window.Resources>
         <ResourceDictionary Source="ApplicationResources.xaml" />
     </Window.Resources>
@@ -26,24 +26,39 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <ItemsControl Name="ChessBoard" ItemsSource="{Binding Pieces}" Width="640" Height="640">
+            <ItemsControl x:Name="ChessBoard" Width="640" Height="640" ItemsSource="{Binding BoardGrids}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <Canvas/>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                                <RowDefinition />
+                                <RowDefinition />
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+                        </Grid>
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <Grid Width="{Binding Width}" Height="{Binding Height}">
-                            <Image  Source="{Binding ImageSource}" />
+                        <Grid Width="{Binding SideLength}" Height="{Binding SideLength}">
+                            <local:BoardGrid/>
                             <Border BorderBrush="Black" BorderThickness="2"/>
                         </Grid>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
                 <ItemsControl.ItemContainerStyle>
                     <Style>
-                        <Setter Property="Canvas.Left" Value="{Binding Pos.X}" />
-                        <Setter Property="Canvas.Top" Value="{Binding Pos.Y}" />
+                        <Style.Setters>
+                            <Setter Property="Grid.Row" Value="{Binding Pos.X}" />
+                            <Setter Property="Grid.Column" Value="{Binding Pos.Y}" />
+                        </Style.Setters>
                     </Style>
                 </ItemsControl.ItemContainerStyle>
             </ItemsControl>

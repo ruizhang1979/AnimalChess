@@ -1,7 +1,6 @@
-﻿using System.ComponentModel;
+﻿using Microsoft.VisualStudio.PlatformUI;
 using System.Drawing;
-using System.Runtime.CompilerServices;
-using System.Windows.Media;
+using System.Windows.Input;
 
 namespace JungleChess
 {
@@ -23,7 +22,14 @@ namespace JungleChess
         Black
     }
 
-    public class ChessPiece : INotifyPropertyChanged
+    public enum Situation
+    {
+        Hole,
+        Land,
+        Tree
+    }
+
+    public class ChessPiece : ViewModelBase
     {
         private bool _FaceUp;
         public bool FaceUp
@@ -34,11 +40,7 @@ namespace JungleChess
                 if (!_FaceUp)
                 {
                     _FaceUp = true;
-                    RaisePropertyChanged();
-                }
-                else
-                {
-                    return;
+                    ImageSource = ImageSourceRetriever.RetrieveImageSource(PieceType, Player);
                 }
             }
         }
@@ -57,41 +59,18 @@ namespace JungleChess
             set { _Pos = value; RaisePropertyChanged(); }
         }
 
-        private PieceType _Type;
-        public PieceType Type
+        public Situation Situation;
+
+        public PieceType PieceType { get; private set; }
+
+        private double _SideLength;
+        public double SideLength
         {
-            get => _Type;
-            set { _Type = value; RaisePropertyChanged(); }
+            get => _SideLength;
+            set { _SideLength = value; RaisePropertyChanged(); }
         }
 
-        private Player _Player;
-        public Player Player
-        {
-            get => _Player;
-            set { _Player = value; RaisePropertyChanged(); }
-        }
-
-        private ImageSource _Image;
-        public ImageSource Image
-        {
-            get => _Image;
-            private set { _Image = value; RaisePropertyChanged(); }
-        }
-
-        private double _Width;
-        public double Width
-        {
-            get => _Width;
-            set { _Width = value; RaisePropertyChanged(); }
-        }
-
-
-        private double _Height;
-        public double Height
-        {
-            get => _Height;
-            set { _Height = value; RaisePropertyChanged(); }
-        }
+        public Player Player { get; private set; }
 
         private string _ImageSource;
         public string ImageSource
@@ -100,15 +79,12 @@ namespace JungleChess
             set { _ImageSource = value; RaisePropertyChanged(); }
         }
 
-        public ChessPiece()
+        public ChessPiece(PieceType pieceType, Player player)
         {
-            FaceUp = true;
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected virtual void RaisePropertyChanged([CallerMemberName] string name = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+            PieceType = pieceType;
+            Player = player;
+            Situation = Situation.Land;
+            ImageSource = "/Res/back.png";
         }
     }
 }

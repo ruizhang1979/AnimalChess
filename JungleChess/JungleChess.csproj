@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Res\back.png" />
     <None Remove="Res\cat_black.png" />
     <None Remove="Res\cat_red.png" />
     <None Remove="Res\dog_black.png" />
@@ -35,6 +36,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Res\back.png" />
     <Resource Include="Res\cat_black.png" />
     <Resource Include="Res\cat_red.png" />
     <Resource Include="Res\dog_black.png" />
@@ -52,6 +54,14 @@
     <Resource Include="Res\tiger_red.png" />
     <Resource Include="Res\wolf_black.png" />
     <Resource Include="Res\wolf_red.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Converters\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.VisualStudio.Utilities" Version="16.9.31024.71" />
   </ItemGroup>
 
 </Project>
