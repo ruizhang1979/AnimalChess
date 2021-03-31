@@ -4,11 +4,15 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:JungleChess"
+        xmlns:Converter="clr-namespace:JungleChess.Converters"
         mc:Ignorable="d"
-        Width="820" Height="700"
+        Width="1080" Height="720"
         Title="Jungle Chess" Icon="/Res/Icon.ico">
     <Window.Resources>
-        <ResourceDictionary Source="ApplicationResources.xaml" />
+        <ResourceDictionary>
+            <Converter:BoolToColorConverter x:Key="BoolToColorConverter"/>
+            <Converter:InvertBoolToColorConverter x:Key="InvertBoolToColorConverter"/>
+        </ResourceDictionary>
     </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
@@ -21,12 +25,12 @@
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="160"/>
+                <ColumnDefinition Width="320"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <ItemsControl x:Name="ChessBoard" Width="640" Height="640" ItemsSource="{Binding BoardGrids}">
+            <ItemsControl x:Name="ChessBoard" Width="640" Height="640" ItemsSource="{Binding BoardGrids, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                         <Grid>
@@ -48,7 +52,12 @@
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <Grid Width="{Binding SideLength}" Height="{Binding SideLength}">
-                            <local:BoardGrid/>
+                            <local:BoardGridControl >
+                                <local:BoardGridControl.InputBindings>
+                                    <MouseBinding MouseAction="LeftClick" Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType = {x:Type ItemsControl}}, Path=DataContext.GridMouseClickCommand}" 
+                                        CommandParameter="{Binding}" />
+                                </local:BoardGridControl.InputBindings>
+                            </local:BoardGridControl>
                             <Border BorderBrush="Black" BorderThickness="2"/>
                         </Grid>
                     </DataTemplate>
@@ -62,25 +71,89 @@
                     </Style>
                 </ItemsControl.ItemContainerStyle>
             </ItemsControl>
-            <StackPanel Grid.Column="1" VerticalAlignment="Stretch">
+            <StackPanel Grid.Column="1" VerticalAlignment="Stretch" Margin ="10">
                 <Grid>
                     <Grid.RowDefinitions>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
                     </Grid.RowDefinitions>
-                    <Button Grid.Row="0" Content="New"/>
-                    <Button Grid.Row="1" Content="Surrender"/>
-                    <Button Grid.Row="2" Content="Draw"/>
                 </Grid>
+                <GroupBox Header="System" >
+                    <Grid Margin="10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Button Grid.Column="0" Content="New.." Margin="0,0,10,0"/>
+                        <Button Grid.Column="1" Content="Save" Margin="5,0,5,0" />
+                        <Button Grid.Column="2" Content="Load.." Margin="10,0,0,0"/>
+                    </Grid>
+                </GroupBox>
+                <GroupBox Header="Game" >
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Grid Grid.Row="0" Margin="10">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <Button Grid.Column="0" Content="&lt; Back" Margin="0,0,10,0"/>
+                            <Button Grid.Column="1" Content="Pass" Margin="5,0,5,0" />
+                            <Button Grid.Column="2" Content="Next &gt;" Margin="10,0,0,0"/>
+                        </Grid>
+                        <Grid Grid.Row="1">
+                            <Button Width="200" Height="40" Content="Surrender" Margin="44,10,44,10"/>
+                        </Grid>
+                    </Grid>
+                </GroupBox>
+                <GroupBox Header="Player" >
+                    <Grid Margin="10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Border Grid.Column="0" BorderBrush="{Binding CurrentPlayer , Converter={StaticResource BoolToColorConverter}}" BorderThickness="2">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+                                <Label Grid.Row="0" Height="35" Content="Red" HorizontalAlignment="Center" Foreground ="Red" />
+                                <Label Grid.Row="1" Height="35" Content="{Binding RedPlayerName}" HorizontalAlignment="Center" Foreground ="Red"/>
+                                <Grid Grid.Row="2" Height="200">
+                                    <local:LostPiecesGrid DataContext="{Binding LostRedPieces}"/>
+                                </Grid>
+                            </Grid>
+                        </Border>
+                        <Border  Grid.Column="1" BorderBrush="{Binding CurrentPlayer , Converter={StaticResource InvertBoolToColorConverter}}" BorderThickness="2">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+                                <Label Grid.Row="0" Height="35" Content="Black" HorizontalAlignment="Center" Foreground ="Black"/>
+                                <Label Grid.Row="1" Height="35" Content="{Binding BlackPlayerName}" HorizontalAlignment="Center" Foreground ="Black"/>
+                                <Grid Grid.Row="2" Height="200">
+                                    <local:LostPiecesGrid DataContext="{Binding LostBlackPieces}"/>
+                                </Grid>
+                            </Grid>
+                        </Border>
+                    </Grid>
+                </GroupBox>
             </StackPanel>
         </Grid>
         <StatusBar Grid.Row="1" Background="#FFF0F0F0" FontSize="17.5">
             <StatusBarItem Padding="5,0">
                 <StackPanel Orientation="Horizontal">
-                    <TextBlock FontStyle="Italic" Text="Player on turn: "/>
-                    <TextBlock Name="textBlockOnTurn" FontStyle="Italic"/>
-                    <TextBlock FontStyle="Italic" Text=" pieces."/>
+                    <TextBlock FontStyle="Italic" Text="Result: "/>
                 </StackPanel>
             </StatusBarItem>
             <StatusBarItem Padding="5,0">

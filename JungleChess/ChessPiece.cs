@@ -1,6 +1,4 @@
-﻿using Microsoft.VisualStudio.PlatformUI;
-using System.Drawing;
-using System.Windows.Input;
+﻿using System.Drawing;
 
 namespace JungleChess
 {

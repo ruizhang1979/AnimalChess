@@ -57,10 +57,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Converters\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Microsoft.VisualStudio.Utilities" Version="16.9.31024.71" />
   </ItemGroup>
 

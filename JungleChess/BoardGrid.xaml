@@ -1,17 +1,43 @@
-﻿<UserControl x:Class="JungleChess.BoardGrid"
+﻿<UserControl x:Class="JungleChess.BoardGridControl"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:Converter="clr-namespace:JungleChess.Converters"
              mc:Ignorable="d">
-    <Canvas Background="LightBlue">
-        <Image Name ="PieceInHole" Width="{Binding PieceInHole.SideLength}" Height="{Binding PieceInHole.SideLength}" Canvas.Left="{Binding PieceInHole.Pos.X}" Canvas.Top="{Binding PieceInHole.Pos.Y}" Source="{Binding PieceInHole.ImageSource}" />
-        <Image Name ="PieceOnLand" Width="{Binding PieceOnLand.SideLength}" Height="{Binding PieceOnLand.SideLength}" Canvas.Left="{Binding PieceOnLand.Pos.X}" Canvas.Top="{Binding PieceOnLand.Pos.Y}" Source="{Binding PieceOnLand.ImageSource}" >
-            <Image.InputBindings>
-                <MouseBinding MouseAction="LeftDoubleClick" Command="{Binding MouseDoubleClickCommand}" 
-                              CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType= {x:Type Image}}, Path=Name}" />
-            </Image.InputBindings>
-        </Image>
-        <Image Name ="PieceOnTree" Width="{Binding PieceOnTree.SideLength}" Height="{Binding PieceOnTree.SideLength}" Canvas.Left="{Binding PieceOnTree.Pos.X}" Canvas.Top="{Binding PieceOnTree.Pos.Y}" Source="{Binding PieceOnTree.ImageSource}" />
-    </Canvas>
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <Converter:BoolToColorConverter x:Key="BoolToColorConverter"/>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <ItemsControl ItemsSource="{Binding Pieces}">
+        <ItemsControl.ItemsPanel>
+            <ItemsPanelTemplate>
+                <Canvas Background="LightBlue"/>
+            </ItemsPanelTemplate>
+        </ItemsControl.ItemsPanel>
+        <ItemsControl.ItemTemplate>
+            <DataTemplate>
+                <Border BorderBrush="{Binding Selected, Converter={StaticResource BoolToColorConverter}}" BorderThickness="4">
+                    <Image Width="{Binding SideLength}"  Height="{Binding SideLength}"
+                       Source="{Binding ImageSource}">
+                        <Image.InputBindings>
+                            <MouseBinding MouseAction="LeftDoubleClick" Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorLevel=2, AncestorType = {x:Type ItemsControl}}, Path=DataContext.PieceMouseDoubleClickCommand}" 
+                              CommandParameter="{Binding}" />
+                            <MouseBinding MouseAction="LeftClick" Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorLevel=2, AncestorType = {x:Type ItemsControl}}, Path=DataContext.PieceMouseClickCommand}" 
+                              CommandParameter="{Binding}" />
+                        </Image.InputBindings>
+                    </Image>
+                </Border>
+            </DataTemplate>
+        </ItemsControl.ItemTemplate>
+        <ItemsControl.ItemContainerStyle>
+            <Style>
+                <Style.Setters>
+                    <Setter Property="Canvas.Left" Value="{Binding Pos.X}" />
+                    <Setter Property="Canvas.Top" Value="{Binding Pos.Y}" />
+                </Style.Setters>
+            </Style>
+        </ItemsControl.ItemContainerStyle>
+    </ItemsControl>
 </UserControl>

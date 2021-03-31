@@ -1,16 +1,26 @@
-﻿using Microsoft.VisualStudio.PlatformUI;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Drawing;
-using System.Windows.Input;
+using System.Linq;
 
 namespace JungleChess
 {
     public class ChessBoardGrid : ViewModelBase
     {
-        public ChessBoardGrid()
+        public ChessBoardGrid(PieceType type, Player player, double sideLength)
         {
-            MouseDoubleClickCommand = new DelegateCommand(PieceDbClicked);
+            SideLength = sideLength;
+
+            Pieces = new ObservableCollection<ChessPiece>
+            {
+                null,
+                new ChessPiece(type, player){ Pos = CalculatePos(1), SideLength = sideLength / 2 },
+                null
+            };
         }
-        public ICommand MouseDoubleClickCommand { get; set; }
+
+
+        public ObservableCollection<ChessPiece> Pieces { get; set; }
 
         private double _SideLength;
         public double SideLength
@@ -26,51 +36,86 @@ namespace JungleChess
             set { _Pos = value; RaisePropertyChanged(); }
         }
 
-        private ChessPiece _PieceInHole;
-        public ChessPiece PieceInHole
+        internal bool TryMovePiece(ChessPiece piece, out IList<ChessPiece> piecesLost)
         {
-            get => _PieceInHole;
-            set
+            piecesLost = new List<ChessPiece>();
+            //The piece move to an empty grid
+            if (!Pieces.Any(x => x != null))
             {
-                var pos = new Point(0, (int)(SideLength / 2));
-                value.Pos = pos;
-                _PieceInHole = value;
-                RaisePropertyChanged();
+                MovePiece(piece,1);
+                return true;
             }
+            //The piece attacks another faceup piece on land
+            else if (Pieces[1].FaceUp)
+            {
+                if (piece.Player != Pieces[1].Player &&
+                    (piece.PieceType >= Pieces[1].PieceType ||
+                    (piece.PieceType == PieceType.Mouse && Pieces[1].PieceType == PieceType.Elephant)))
+                {
+                    piecesLost.Add(Pieces[1]);
+                    if (piece.PieceType == Pieces[1].PieceType)
+                    {
+                        piecesLost.Add(piece);
+                        Pieces[1] = null;
+                    }
+                    else
+                    {
+                        MovePiece(piece,1);
+                    }
+                    return true;
+                }
+            }
+            //The piece is mouse any try to move to the hole of another grid
+            else if (piece.PieceType == PieceType.Mouse)
+            {
+                if (Pieces[0] == null)
+                {
+                    MovePiece(piece,0);
+                }
+                else
+                {
+                    piecesLost.Add(piece);
+                    piecesLost.Add(Pieces[0]);
+                    Pieces[0] = null;
+                }
+                return true;
+            }
+            //The piece is a cat or leopard and try to move to the tree of another grid
+            else if (piece.PieceType == PieceType.Cat || piece.PieceType == PieceType.Leopard)
+            {
+                if (Pieces[2] == null)
+                {
+                    MovePiece(piece,2);
+                    return true;
+                }
+                else if (Pieces[2].Player != piece.Player && piece.PieceType >= Pieces[2].PieceType)
+                {
+                    piecesLost.Add(Pieces[2]);
+                    if (Pieces[2].PieceType == piece.PieceType)
+                    {
+                        piecesLost.Add(piece);
+                        Pieces[2] = null;
+                    }
+                    else
+                    {
+                        MovePiece(piece, 2);
+                    }
+                    return true;
+                }
+            }
+            return false;
         }
 
-        private ChessPiece _PieceOnLand;
-        public ChessPiece PieceOnLand
+        private void MovePiece(ChessPiece piece, int index)
         {
-            get => _PieceOnLand;
-            set
-            {
-                var pos = new Point((int)(SideLength / 4), (int)(SideLength / 4));
-                value.Pos = pos;
-                _PieceOnLand = value;
-                RaisePropertyChanged();
-            }
+            piece.Pos = CalculatePos(index);
+            Pieces[index] = piece;
         }
 
-        private ChessPiece _PieceOnTree;
-        public ChessPiece PieceOnTree
+        private Point CalculatePos(int index)
         {
-            get => _PieceOnTree;
-            set
-            {
-                var pos = new Point((int)(SideLength / 2), 0);
-                value.Pos = pos;
-                _PieceOnTree = value;
-                RaisePropertyChanged();
-            }
-        }
-
-        private void PieceDbClicked(object sender)
-        {
-            if (sender.ToString() == "PieceOnLand")
-            {
-                Engine.TryFaceUp(this);
-            }
+            return new Point((int)(index * (SideLength / 4)),
+                (int)((SideLength / 2) - index * (SideLength / 4)));
         }
     }
 }
