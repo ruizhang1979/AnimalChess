@@ -57,6 +57,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="LiteDB" Version="5.0.10" />
     <PackageReference Include="Microsoft.VisualStudio.Utilities" Version="16.9.31024.71" />
   </ItemGroup>
 

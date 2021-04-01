@@ -7,27 +7,19 @@ namespace JungleChess
 {
     public class ChessBoardGrid : ViewModelBase
     {
-        public ChessBoardGrid(PieceType type, Player player, double sideLength)
+        public ChessBoardGrid(PieceType type, Player player)
         {
-            SideLength = sideLength;
-
             Pieces = new ObservableCollection<ChessPiece>
             {
                 null,
-                new ChessPiece(type, player){ Pos = CalculatePos(1), SideLength = sideLength / 2 },
+                new ChessPiece(type, player){ Pos = CalculatePos(1) },
                 null
             };
         }
 
-
         public ObservableCollection<ChessPiece> Pieces { get; set; }
 
-        private double _SideLength;
-        public double SideLength
-        {
-            get => _SideLength;
-            set { _SideLength = value; RaisePropertyChanged(); }
-        }
+        static public double SideLength { get; set; }
 
         private Point _Pos;
         public Point Pos
@@ -36,7 +28,7 @@ namespace JungleChess
             set { _Pos = value; RaisePropertyChanged(); }
         }
 
-        internal bool TryMovePiece(ChessPiece piece, out IList<ChessPiece> piecesLost)
+        internal bool TryMovePieceTo(ChessPiece piece, out IList<ChessPiece> piecesLost)
         {
             piecesLost = new List<ChessPiece>();
             //The piece move to an empty grid

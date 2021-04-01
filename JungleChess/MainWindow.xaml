@@ -11,7 +11,7 @@
     <Window.Resources>
         <ResourceDictionary>
             <Converter:BoolToColorConverter x:Key="BoolToColorConverter"/>
-            <Converter:InvertBoolToColorConverter x:Key="InvertBoolToColorConverter"/>
+            <Converter:PlayerToColorConverter x:Key="PlayerToColorConverter"/>
         </ResourceDictionary>
     </Window.Resources>
     <Grid>
@@ -118,7 +118,7 @@
                             <ColumnDefinition/>
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
-                        <Border Grid.Column="0" BorderBrush="{Binding CurrentPlayer , Converter={StaticResource BoolToColorConverter}}" BorderThickness="2">
+                        <Border Grid.Column="0" BorderBrush="{Binding CurrentPlayer , Converter={StaticResource PlayerToColorConverter}, ConverterParameter=true}" BorderThickness="2">
                             <Grid>
                                 <Grid.RowDefinitions>
                                     <RowDefinition/>
@@ -132,7 +132,7 @@
                                 </Grid>
                             </Grid>
                         </Border>
-                        <Border  Grid.Column="1" BorderBrush="{Binding CurrentPlayer , Converter={StaticResource InvertBoolToColorConverter}}" BorderThickness="2">
+                        <Border  Grid.Column="1" BorderBrush="{Binding CurrentPlayer , Converter={StaticResource PlayerToColorConverter}, ConverterParameter=false}" BorderThickness="2">
                             <Grid>
                                 <Grid.RowDefinitions>
                                     <RowDefinition/>

@@ -5,15 +5,16 @@ using System.Windows.Media;
 
 namespace JungleChess.Converters
 {
-    public class InvertBoolToColorConverter : IValueConverter
+    public class PlayerToColorConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is bool b)
+            if (value is Player p && parameter is bool b)
             {
-                if (!b)
+                if ((p == Player.Red && b) ||
+                    (p == Player.Black && !b))
                 {
-                    return new SolidColorBrush(Colors.DarkBlue);
+                    return new SolidColorBrush(Colors.Yellow);
                 }
             }
             return new SolidColorBrush(Colors.Transparent);

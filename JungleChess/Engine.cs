@@ -6,34 +6,38 @@ namespace JungleChess
 {
     public class Engine
     {
-        static public Player CurrentPlayer { get; set; }
-
-        static public void TryFaceUp(ChessPiece piece, IList<ChessBoardGrid> boardGrids)
+        static public void TryFaceUp(ChessPiece piece, ChessBoard chessBoard)
         {
-            var boardGrid = boardGrids.First(x => x.Pieces.Contains(piece));
+            var boardGrid = chessBoard.BoardGrids.First(x => x.Pieces.Contains(piece));
             if (boardGrid.Pieces[0] == null && boardGrid.Pieces[2] == null && !boardGrid.Pieces[1].FaceUp)
             {
                 boardGrid.Pieces[1].FaceUp = true;
-                RemoveCurrentSelection(boardGrids);
-                ChangePlayerTurn();
+                FinishCurrentTurn(chessBoard);
             }
         }
 
-        static public bool TrySelect(ChessPiece piece, IList<ChessBoardGrid> boardGrids)
+        private static void FinishCurrentTurn(ChessBoard chessBoard)
         {
-            if (!piece.FaceUp || piece.Player != CurrentPlayer)
+            ClearSelection(chessBoard.BoardGrids);
+            ChangePlayer(chessBoard);
+        }
+
+        static public bool TrySelect(ChessPiece piece, ChessBoard chessBoard)
+        {
+            if (!piece.FaceUp || piece.Player != chessBoard.CurrentPlayer)
             {
                 return false;
             }
             if (!piece.Selected)
             {
-                RemoveCurrentSelection(boardGrids);
+                ClearSelection(chessBoard.BoardGrids);
                 piece.Selected = true;
             }
             return true;
         }
 
-        static void RemoveCurrentSelection(IList<ChessBoardGrid> boardGrids)
+
+        static void ClearSelection(IList<ChessBoardGrid> boardGrids)
         {
             var selectedPiece = boardGrids.SelectMany(x => x.Pieces).FirstOrDefault(y => y != null && y.Selected);
             if (selectedPiece != null)
@@ -42,32 +46,36 @@ namespace JungleChess
             }
         }
 
-        internal static IList<ChessPiece> TryMove(ChessPiece targetPiece, IList<ChessBoardGrid> boardGrids)
+        internal static void TryMove(ChessPiece targetPiece, ChessBoard chessBoard)
         {
-            var targetGrid = boardGrids.First(x => x.Pieces.Contains(targetPiece));
-            return TryMove(targetGrid, boardGrids);
+            var targetGrid = chessBoard.BoardGrids.First(x => x.Pieces.Contains(targetPiece));
+            TryMove(targetGrid, chessBoard);
         }
 
-        internal static IList<ChessPiece> TryMove(ChessBoardGrid targetGrid, IList<ChessBoardGrid> boardGrids)
+        internal static void TryMove(ChessBoardGrid targetGrid, ChessBoard chessBoard)
         {
-            var selectedPiece = boardGrids.SelectMany(x => x.Pieces).FirstOrDefault(y => y != null && y.Selected);
-            if (selectedPiece == null || !IsTargetGridInRange(selectedPiece, targetGrid, boardGrids))
+            var selectedPiece = chessBoard.BoardGrids.SelectMany(x => x.Pieces).FirstOrDefault(y => y != null && y.Selected);
+            if (selectedPiece == null || !IsTargetGridInRange(selectedPiece, targetGrid, chessBoard.BoardGrids))
             {
-                return null;
+                return;
             }
-            var containerGrid = boardGrids.First(x => x.Pieces.Contains(selectedPiece));
+            var containerGrid = chessBoard.BoardGrids.First(x => x.Pieces.Contains(selectedPiece));
             var indexOfPieceInGrid = containerGrid.Pieces.IndexOf(selectedPiece);
-            if (targetGrid.TryMovePiece(selectedPiece, out IList<ChessPiece> pieceLost))
+            if (targetGrid.TryMovePieceTo(selectedPiece, out IList<ChessPiece> pieceLost))
             {
                 containerGrid.Pieces[indexOfPieceInGrid] = null;
-                RemoveCurrentSelection(boardGrids);
-                ChangePlayerTurn();
-                return pieceLost;
+                if (pieceLost != null)
+                {
+                    AddLostPieces(pieceLost, chessBoard);
+                }
+                FinishCurrentTurn(chessBoard);
             }
-            return null;
         }
 
-        private static void ChangePlayerTurn() => CurrentPlayer = CurrentPlayer == Player.Red ? Player.Black : Player.Red;
+        public static void ChangePlayer(ChessBoard chessBoard)
+        {
+            chessBoard.CurrentPlayer = chessBoard.CurrentPlayer == Player.Red ? Player.Black : Player.Red;
+        }
 
         private static bool IsTargetGridInRange(ChessPiece piece, ChessBoardGrid targetGrid, IList<ChessBoardGrid> boardGrids)
         {
@@ -84,6 +92,21 @@ namespace JungleChess
                 return true;
             }
             return false;
+        }
+
+        private static void AddLostPieces(IList<ChessPiece> piecesLost, ChessBoard chessBoard)
+        {
+            foreach (var lost in piecesLost)
+            {
+                if (lost.Player == Player.Red)
+                {
+                    chessBoard.LostRedPieces.Add(lost);
+                }
+                else
+                {
+                    chessBoard.LostBlackPieces.Add(lost);
+                }
+            }
         }
     }
 }

@@ -61,12 +61,8 @@ namespace JungleChess
 
         public PieceType PieceType { get; private set; }
 
-        private double _SideLength;
-        public double SideLength
-        {
-            get => _SideLength;
-            set { _SideLength = value; RaisePropertyChanged(); }
-        }
+        static public double SideLength { get; set; }
+        static public double SideLengthThumbnail { get; set; }
 
         public Player Player { get; private set; }
 

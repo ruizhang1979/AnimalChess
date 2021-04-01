@@ -10,6 +10,8 @@ namespace JungleChess
 {
     public class ChessBoard : ViewModelBase
     {
+        static private IList<ChessStep> _Steps = new List<ChessStep>();
+
         public ObservableCollection<ChessBoardGrid> BoardGrids { get; set; }
 
         public ObservableCollection<ChessPiece> LostRedPieces { get; set; }
@@ -18,7 +20,12 @@ namespace JungleChess
         public string RedPlayerName { get; set; } = "Zhang HaoXuan";
         public string BlackPlayerName { get; set; } = "Zhang Rui";
 
-        public bool CurrentPlayer => Engine.CurrentPlayer == Player.Red;
+        private Player _CurrentPlayer;
+        public Player CurrentPlayer
+        {
+            get => _CurrentPlayer;
+            set { _CurrentPlayer = value; RaisePropertyChanged(); }
+        }
 
         public ICommand PieceMouseClickCommand { get; set; }
         public ICommand PieceMouseDoubleClickCommand { get; set; }
@@ -39,26 +46,28 @@ namespace JungleChess
         {
             LostRedPieces = new ObservableCollection<ChessPiece>();
             LostBlackPieces = new ObservableCollection<ChessPiece>();
-            Engine.CurrentPlayer = Player.Red;
-            var pieceLen = _GridSideLength / 2;
+            _CurrentPlayer = Player.Red;
+            ChessBoardGrid.SideLength = _GridSideLength;
+            ChessPiece.SideLength = _GridSideLength / 2;
+            ChessPiece.SideLengthThumbnail = 4;
             var grids = new List<ChessBoardGrid>
             {
-                new ChessBoardGrid(PieceType.Mouse, Player.Red, _GridSideLength),
-                new ChessBoardGrid(PieceType.Cat, Player.Red, _GridSideLength),
-                new ChessBoardGrid(PieceType.Dog, Player.Red, _GridSideLength),
-                new ChessBoardGrid(PieceType.Wolf, Player.Red, _GridSideLength),
-                new ChessBoardGrid(PieceType.Leopard, Player.Red, _GridSideLength) ,
-                new ChessBoardGrid(PieceType.Tiger, Player.Red, _GridSideLength),
-                new ChessBoardGrid(PieceType.Lion, Player.Red, _GridSideLength),
-                new ChessBoardGrid(PieceType.Elephant, Player.Red, _GridSideLength),
-                new ChessBoardGrid(PieceType.Mouse, Player.Black, _GridSideLength),
-                new ChessBoardGrid(PieceType.Cat, Player.Black, _GridSideLength),
-                new ChessBoardGrid(PieceType.Dog, Player.Black, _GridSideLength),
-                new ChessBoardGrid(PieceType.Wolf, Player.Black, _GridSideLength),
-                new ChessBoardGrid(PieceType.Leopard, Player.Black, _GridSideLength),
-                new ChessBoardGrid(PieceType.Tiger, Player.Black, _GridSideLength),
-                new ChessBoardGrid(PieceType.Lion, Player.Black, _GridSideLength),
-                new ChessBoardGrid(PieceType.Elephant, Player.Black, _GridSideLength)
+                new ChessBoardGrid(PieceType.Mouse, Player.Red),
+                new ChessBoardGrid(PieceType.Cat, Player.Red),
+                new ChessBoardGrid(PieceType.Dog, Player.Red),
+                new ChessBoardGrid(PieceType.Wolf, Player.Red),
+                new ChessBoardGrid(PieceType.Leopard, Player.Red) ,
+                new ChessBoardGrid(PieceType.Tiger, Player.Red),
+                new ChessBoardGrid(PieceType.Lion, Player.Red),
+                new ChessBoardGrid(PieceType.Elephant, Player.Red),
+                new ChessBoardGrid(PieceType.Mouse, Player.Black),
+                new ChessBoardGrid(PieceType.Cat, Player.Black),
+                new ChessBoardGrid(PieceType.Dog, Player.Black),
+                new ChessBoardGrid(PieceType.Wolf, Player.Black),
+                new ChessBoardGrid(PieceType.Leopard, Player.Black),
+                new ChessBoardGrid(PieceType.Tiger, Player.Black),
+                new ChessBoardGrid(PieceType.Lion, Player.Black),
+                new ChessBoardGrid(PieceType.Elephant, Player.Black)
             };
             BoardGrids = new ObservableCollection<ChessBoardGrid>(grids.OrderBy(i => Guid.NewGuid()));
             foreach (var grid in BoardGrids)
@@ -76,32 +85,9 @@ namespace JungleChess
         {
             if (obj is ChessPiece piece)
             {
-                if (!Engine.TrySelect(piece, BoardGrids))
+                if (!Engine.TrySelect(piece, this))
                 {
-                    var piecesLost = Engine.TryMove(piece, BoardGrids);
-                    if (piecesLost != null)
-                    {
-                        UpdateLostPieces(piecesLost);
-                    }
-                }
-                RaisePropertyChanged("CurrentPlayer");
-            }
-        }
-
-        private void UpdateLostPieces(IList<ChessPiece> piecesLost)
-        {
-            foreach (var lost in piecesLost)
-            {
-                lost.SideLength = 40;
-                if (lost.Player == Player.Red)
-                {
-                    LostRedPieces.Add(lost);
-                    //RaisePropertyChanged("LostRedPieces");
-                }
-                else
-                {
-                    LostBlackPieces.Add(lost);
-                    RaisePropertyChanged("LostBlackPieces");
+                    Engine.TryMove(piece, this);
                 }
             }
         }
@@ -110,8 +96,7 @@ namespace JungleChess
         {
             if (obj is ChessPiece piece)
             {
-                Engine.TryFaceUp(piece, BoardGrids);
-                RaisePropertyChanged("CurrentPlayer");
+                Engine.TryFaceUp(piece, this);
             }
         }
 
@@ -119,12 +104,7 @@ namespace JungleChess
         {
             if (obj is ChessBoardGrid grid)
             {
-                var piecesLost = Engine.TryMove(grid, BoardGrids);
-                if (piecesLost != null)
-                {
-                    UpdateLostPieces(piecesLost);
-                }
-                RaisePropertyChanged("CurrentPlayer");
+                Engine.TryMove(grid, this);
             }
         }
     }

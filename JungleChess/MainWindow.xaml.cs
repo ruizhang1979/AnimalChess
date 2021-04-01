@@ -8,7 +8,7 @@ namespace JungleChess
     /// </summary>
     public partial class MainWindow : Window
     {
-        public ChessBoard chessBoard;
+        private ChessBoard chessBoard;
         public MainWindow()
         {
             InitializeComponent();
