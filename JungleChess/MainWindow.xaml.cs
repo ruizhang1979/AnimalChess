@@ -21,7 +21,6 @@ namespace JungleChess
             if (TryEndGame())
             {
                 _ChessBoard.NewGame();
-                Refresh();
             }
         }
 
@@ -60,12 +59,6 @@ namespace JungleChess
             return close;
         }
 
-        private void Refresh()
-        {
-            DataContext = null;
-            DataContext = _ChessBoard;
-        }
-
         private void SaveGame(object sender, RoutedEventArgs e)
         {
             if (_ChessBoard.SaveGame())
@@ -83,7 +76,6 @@ namespace JungleChess
                 if (TryEndGame())
                 {
                     _ChessBoard.LoadGame(window.IdToLoad);
-                    Refresh();
                 }
             }
         }

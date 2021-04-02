@@ -29,8 +29,19 @@ namespace JungleChess
         public ObservableCollection<ChessPiece> ALostPieces { get; set; } = new ObservableCollection<ChessPiece>();
         public ObservableCollection<ChessPiece> BLostPieces { get; set; } = new ObservableCollection<ChessPiece>();
 
-        public Player PlayerA { get; set; }
-        public Player PlayerB { get; set; }
+        private Player _PlayerA;
+        public Player PlayerA 
+        {
+            get => _PlayerA;
+            set { _PlayerA = value; RaisePropertyChanged(); }
+        }
+
+        private Player _PlayerB;
+        public Player PlayerB
+        {
+            get => _PlayerB;
+            set { _PlayerB = value; RaisePropertyChanged(); }
+        }
 
         private int _CurrentStep = -1;
         public int CurrentStep
