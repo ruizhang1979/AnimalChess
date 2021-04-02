@@ -7,21 +7,33 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
-    <Compile Update="BoardGrid.xaml.cs">
+    <Compile Update="BoardGridControl.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="LoadGameWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="LostPiecesGrid.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="PlayersInputBox.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Page Update="BoardGrid.xaml">
+    <Page Update="BoardGridControl.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="LoadGameWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="LostPiecesGrid.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="MainWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="PlayersInputBox.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>

@@ -5,23 +5,21 @@ using System.Windows.Media;
 
 namespace JungleChess.Converters
 {
-    public class PlayerToColorConverter : IValueConverter
+    public class CurrentPlayerToBorderColorConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is PieceColor color)
+            if (value is Player p && parameter is string s)
             {
-                if (color == PieceColor.Green)
+                if ((p.MoveFirst && s == "A") ||
+                    (!p.MoveFirst && s == "B"))
                 {
-                    return new SolidColorBrush(Colors.Green);
-                }
-                else if (color == PieceColor.Red)
-                {
-                    return new SolidColorBrush(Colors.Red);
+                    return new SolidColorBrush(Colors.Yellow);
                 }
             }
-            return new SolidColorBrush(Colors.Black);
+            return new SolidColorBrush(Colors.Transparent);
         }
+
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
