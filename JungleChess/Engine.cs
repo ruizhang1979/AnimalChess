@@ -109,6 +109,10 @@ namespace JungleChess
                 ClearSelection(chessBoard.BoardGrids);
                 piece.Selected = true;
             }
+            else
+            {
+                piece.Selected = false;
+            }
             return true;
         }
 
