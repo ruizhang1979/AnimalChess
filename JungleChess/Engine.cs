@@ -146,7 +146,7 @@ namespace JungleChess
         internal static void ChangePlayer(ChessBoard chessBoard)
         {
             chessBoard.CurrentPlayer =
-                chessBoard.CurrentPlayer == chessBoard.PlayerA ?
+                chessBoard.CurrentPlayer.MoveFirst == chessBoard.PlayerA.MoveFirst ?
                 chessBoard.PlayerB : chessBoard.PlayerA;
         }
 

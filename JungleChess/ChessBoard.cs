@@ -56,14 +56,19 @@ namespace JungleChess
         }
         public bool IsReadOnly
         {
-            get => !string.IsNullOrWhiteSpace(Winner) || CurrentStep != Steps.Count - 1;
+            get => !string.IsNullOrWhiteSpace(Winner) || CurrentStep != Steps.Count - 1 || CurrentPlayer == null;
         }
 
         private Player _CurrentPlayer;
         public Player CurrentPlayer
         {
             get => _CurrentPlayer;
-            set { _CurrentPlayer = value; RaisePropertyChanged(); }
+            set 
+            { 
+                _CurrentPlayer = value;
+                RaisePropertyChanged();
+                RaisePropertyChanged("IsReadOnly");
+            }
         }
 
         private string _Winner;
