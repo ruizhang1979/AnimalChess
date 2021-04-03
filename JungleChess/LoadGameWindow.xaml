@@ -7,7 +7,7 @@
         Title="Load Game"  SizeToContent="WidthAndHeight">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto" MinHeight="200"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <DataGrid x:Name="Histories" Grid.Row="0" AutoGenerateColumns="False" CanUserAddRows="false" RowHeight="25" IsReadOnly="True"
