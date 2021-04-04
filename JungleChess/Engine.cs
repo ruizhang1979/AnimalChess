@@ -81,6 +81,10 @@ namespace JungleChess
 
         private static void SaveCurrentStep(ChessBoard chessBoard)
         {
+            if (chessBoard.IsReviewMode)
+            {
+                return;
+            }
             var boardGridsCopy = new ObservableCollection<ChessBoardGrid>
                 (chessBoard.BoardGrids.Select(x => x.DeepCopy()));
             var step = new ChessStep

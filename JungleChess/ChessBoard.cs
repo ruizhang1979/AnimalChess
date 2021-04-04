@@ -51,10 +51,10 @@ namespace JungleChess
             {
                 _CurrentStep = value;
                 RaisePropertyChanged();
-                RaisePropertyChanged("IsReadOnly");
+                RaisePropertyChanged("IsReviewMode");
             }
         }
-        public bool IsReadOnly
+        public bool IsReviewMode
         {
             get => !string.IsNullOrWhiteSpace(Winner) || CurrentStep != Steps.Count - 1 || CurrentPlayer == null;
         }
@@ -67,7 +67,7 @@ namespace JungleChess
             { 
                 _CurrentPlayer = value;
                 RaisePropertyChanged();
-                RaisePropertyChanged("IsReadOnly");
+                RaisePropertyChanged("IsReviewMode");
             }
         }
 
@@ -79,7 +79,7 @@ namespace JungleChess
             {
                 _Winner = value;
                 RaisePropertyChanged();
-                RaisePropertyChanged("IsReadOnly");
+                RaisePropertyChanged("IsReviewMode");
             }
         }
 
@@ -167,7 +167,7 @@ namespace JungleChess
 
         internal bool SaveGame()
         {
-            if (IsReadOnly && !IsDirty)
+            if (IsReviewMode && !IsDirty)
             {
                 return false;
             }
@@ -196,7 +196,14 @@ namespace JungleChess
         private void LoadFromStep(int step)
         {
             var chessStep = Steps[step];
-            BoardGrids = new ObservableCollection<ChessBoardGrid>(chessStep.CurrentBoardGrids);
+            if (IsReviewMode)
+            {
+                BoardGrids = new ObservableCollection<ChessBoardGrid>(chessStep.CurrentBoardGrids.Select(x=>x.DeepCopy()));
+            }
+            else
+            {
+                BoardGrids = new ObservableCollection<ChessBoardGrid>(chessStep.CurrentBoardGrids);
+            }
             CurrentPlayer = chessStep.CurrentPlayer;
             Engine.UpdateLostPieces(this);
 
@@ -257,10 +264,6 @@ namespace JungleChess
 
         private void PieceClicked(object obj)
         {
-            if (IsReadOnly)
-            {
-                return;
-            }
             if (obj is ChessPiece piece)
             {
                 if (!Engine.TrySelect(piece, this))
@@ -272,10 +275,6 @@ namespace JungleChess
 
         private void PieceDbClicked(object obj)
         {
-            if (IsReadOnly)
-            {
-                return;
-            }
             if (obj is ChessPiece piece)
             {
                 Engine.TryFaceUp(piece, this);
@@ -284,10 +283,6 @@ namespace JungleChess
 
         private void GridClicked(object obj)
         {
-            if (IsReadOnly)
-            {
-                return;
-            }
             if (obj is ChessBoardGrid grid)
             {
                 Engine.TryMove(grid, this);

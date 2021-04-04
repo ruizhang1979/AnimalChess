@@ -107,12 +107,12 @@
                                 <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
                             <Button Grid.Column="0" Content="&lt; Previous" Command="{Binding PreviousClickCommand}" Height="30" Margin="0,0,10,0"/>
-                            <Button Grid.Column="1" Content="Pass" Command="{Binding PassClickCommand}" Height="30" Margin="5,0,5,0" IsEnabled="{Binding IsReadOnly, Converter={StaticResource InverseBooleanConverter}}"/>
+                            <Button Grid.Column="1" Content="Pass" Command="{Binding PassClickCommand}" Height="30" Margin="5,0,5,0" IsEnabled="{Binding IsReviewMode, Converter={StaticResource InverseBooleanConverter}}"/>
                             <Button Grid.Column="2" Content="Next &gt;" Command="{Binding NextClickCommand}" Height="30" Margin="10,0,0,0"/>
                         </Grid>
                         <WrapPanel Grid.Row="1" HorizontalAlignment="Center" >
-                            <Button Width="100" Height="30" Content="Surrender" Command="{Binding SurrenderClickCommand}" IsEnabled="{Binding IsReadOnly, Converter={StaticResource InverseBooleanConverter}}" Margin="0,0,10,0"/>
-                            <Button Width="100" Height="30" Content="Draw" Command="{Binding DrawClickCommand}" IsEnabled="{Binding IsReadOnly, Converter={StaticResource InverseBooleanConverter}}"/>
+                            <Button Width="100" Height="30" Content="Surrender" Command="{Binding SurrenderClickCommand}" IsEnabled="{Binding IsReviewMode, Converter={StaticResource InverseBooleanConverter}}" Margin="0,0,10,0"/>
+                            <Button Width="100" Height="30" Content="Draw" Command="{Binding DrawClickCommand}" IsEnabled="{Binding IsReviewMode, Converter={StaticResource InverseBooleanConverter}}"/>
                         </WrapPanel>
                     </Grid>
                 </GroupBox>
