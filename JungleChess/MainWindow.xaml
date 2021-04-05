@@ -61,7 +61,7 @@
                                         CommandParameter="{Binding}" />
                                 </local:BoardGridControl.InputBindings>
                             </local:BoardGridControl>
-                            <Border BorderBrush="Black" BorderThickness="2"/>
+                            <Border BorderBrush="Black" BorderThickness="1"/>
                         </Grid>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
