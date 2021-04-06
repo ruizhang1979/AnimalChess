@@ -18,10 +18,10 @@ namespace JungleChess
         private void btnDialogOk_Click(object sender, RoutedEventArgs e)
         {
             var game = Histories.SelectedItem as GameObject;
-            IdToLoad = game.Id;
+            IdToLoad = game?.Id;
             DialogResult = true;
         }
 
-        public int IdToLoad { get; set; }
+        public int? IdToLoad { get; set; }
     }
 }

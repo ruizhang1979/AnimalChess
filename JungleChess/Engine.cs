@@ -61,9 +61,8 @@ namespace JungleChess
             }
         }
 
-        private static IList<ChessPiece> GetLostPieces(ChessBoard chessBoard)
+        private static IEnumerable<ChessPiece> GetLostPieces(ChessBoard chessBoard)
         {
-            var lostPieces = new List<ChessPiece>();
             var currentPieces = chessBoard.BoardGrids.SelectMany(x => x.Pieces.Where(y => y != null));
             for (var c = PieceColor.Red; c <= PieceColor.Green; c++)
             {
@@ -71,12 +70,10 @@ namespace JungleChess
                 {
                     if (!currentPieces.Any(x => x.Color == c && x.PieceType == t))
                     {
-                        var lostPiece = new ChessPiece(t, c) { FaceUp = true };
-                        lostPieces.Add(lostPiece);
+                        yield return new ChessPiece(t, c) { FaceUp = true };
                     }
                 }
             }
-            return lostPieces;
         }
 
         private static void SaveCurrentStep(ChessBoard chessBoard)

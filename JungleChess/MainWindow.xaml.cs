@@ -71,11 +71,11 @@ namespace JungleChess
         {
             var histories = GameSerializer.GetHistories();
             var window = new LoadGameWindow(histories);
-            if (window.ShowDialog() == true)
+            if (window.ShowDialog() == true && window.IdToLoad.HasValue)
             {
                 if (TryEndGame())
                 {
-                    _ChessBoard.LoadGame(window.IdToLoad);
+                    _ChessBoard.LoadGame(window.IdToLoad.Value);
                 }
             }
         }
