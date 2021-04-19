@@ -32,7 +32,20 @@ namespace JungleChess
             ClearSelection(chessBoard.BoardGrids);
             ChangePlayer(chessBoard);
             UpdateLostPieces(chessBoard);
+            CheckResult(chessBoard);
             SaveCurrentStep(chessBoard);
+        }
+
+        private static void CheckResult(ChessBoard chessBoard)
+        {
+            if (chessBoard.ALostPieces.Count == 8 && chessBoard.BLostPieces.Count == 8)
+            {
+                chessBoard.Draw(null);
+            }
+            else if (chessBoard.ALostPieces.Count == 8 || chessBoard.BLostPieces.Count == 8)
+            {
+                chessBoard.Surrender(null);
+            }
         }
 
         internal static void UpdateLostPieces(ChessBoard chessBoard)

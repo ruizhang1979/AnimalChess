@@ -30,7 +30,7 @@ namespace JungleChess
         public ObservableCollection<ChessPiece> BLostPieces { get; set; } = new ObservableCollection<ChessPiece>();
 
         private Player _PlayerA;
-        public Player PlayerA 
+        public Player PlayerA
         {
             get => _PlayerA;
             set { _PlayerA = value; RaisePropertyChanged(); }
@@ -63,8 +63,8 @@ namespace JungleChess
         public Player CurrentPlayer
         {
             get => _CurrentPlayer;
-            set 
-            { 
+            set
+            {
                 _CurrentPlayer = value;
                 RaisePropertyChanged();
                 RaisePropertyChanged("IsReviewMode");
@@ -139,13 +139,13 @@ namespace JungleChess
             }
         }
 
-        private void Draw(object obj)
+        internal void Draw(object obj)
         {
             Winner = "Draw";
             IsDirty = true;
         }
 
-        private void Surrender(object obj)
+        internal void Surrender(object obj)
         {
             var winner = CurrentPlayer == PlayerA ? PlayerB : PlayerA;
             Winner = $"{winner.Name} Win!";
@@ -198,7 +198,7 @@ namespace JungleChess
             var chessStep = Steps[step];
             if (IsReviewMode)
             {
-                BoardGrids = new ObservableCollection<ChessBoardGrid>(chessStep.CurrentBoardGrids.Select(x=>x.DeepCopy()));
+                BoardGrids = new ObservableCollection<ChessBoardGrid>(chessStep.CurrentBoardGrids.Select(x => x.DeepCopy()));
             }
             else
             {
